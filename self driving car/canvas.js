@@ -3,6 +3,8 @@ console.log(canvas)
 canvas.width = 200;
 canvas.height = window.innerHeight;
 
+
+
 ctx = canvas.getContext('2d');
 console.log(ctx)
 const car = new Car(100,100,30,50);

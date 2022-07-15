@@ -54,10 +54,17 @@ class Vector{
     equals(vector){
         return this.x === vector.x && this.y === vector.y;
     }
-    add(vector){
-        this.x += vector.x;
-        this.y += vector.y;
+    add(object){
+        if(typeof object === 'number'){
+            this.x += object;
+            this.y += object;
+        }
+        else{
+            this.x += object.x;
+            this.y += object.y;
+        }
         return this;
+       
     }
     subtract(vector){
         this.x -= vector.x;
@@ -84,6 +91,9 @@ class Vector{
     distance(vector){
         return Math.sqrt(Math.pow(this.position.x - vector.x,2) + Math.pow(this.position.y - vector.y,2));
     }
+    length(){
+        return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y,2));
+    }
     copy(){
         return new Vector(this.x,this.y);
     }
@@ -96,16 +106,29 @@ class Car{
         this.controller = new CarController();
         this.v = new Vector(0,0);
         this.a = new Vector(0.2,0.2);
-        this.friction = new Vector(0.05,0.05);
+        this.frictionFactor = 0.05; 
+        this.angle = 0;
+        this.omega = 0.03;
         this.maxSpeed = new Vector(3,3);
     }
     update(){
         if(this.controller.left){
            this.v.x -= this.a.x;
+           this.angle += this.omega;
+           /*
+                THE UNIT CERCLE is rotated 90 degrees from the x-axis
+                0
+                |
+    pi/2  ------|----------- 3pi/2
+                |
+                |
+                pi
+           */
           
         }
         if(this.controller.right){
             this.v.x += this.a.x;
+            this.angle -= this.omega;
         }
         if(this.controller.forward){
             this.v.y -= this.a.y;
@@ -119,8 +142,9 @@ class Car{
         if(this.v.lowerThan(-this.maxSpeed.multiply(0.5))){
             this.v = -this.maxSpeed.multiply(0.5).copy();
         }
-        
-        this.position.add(this.v);
+       
+        this.v.multiply(1-this.frictionFactor);
+       
 
     }
     draw(ctx){
