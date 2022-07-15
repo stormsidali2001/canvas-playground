@@ -24,7 +24,7 @@ class CarController{
                     this.right = true;
                     break;
             }
-            console.table(this)
+          
 
         })
         document.addEventListener('keyup',e=>{
@@ -42,15 +42,15 @@ class CarController{
                     this.right = false;
                     break;
             }
-            console.table(this)
+           
         })
     }
 
 }
 class Vector{
-    constructor(x1,x2){
-        this.x1 = x1;
-        this.x2 = x2;
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
     }
 }
 class Car{
@@ -59,23 +59,28 @@ class Car{
         this.width = width;
         this.height = height;
         this.controller = new CarController();
-        this.v = new Vector(0,5);
+        this.v = new Vector(0,0);
+        this.a = new Vector(0.2,0.2);
     }
     update(){
         if(this.controller.left){
-           
+           this.position.x -= 2;
+          
         }
     }
     draw(ctx){
         ctx.beginPath();
         ctx.fillStyle = 'black'
+        ctx.save()
+        ctx.translate(this.position.x,this.position.x)
         ctx.rect(
-            this.x - this.width/2,
-            this.y - this.height/2,
+            - this.width/2,
+            -this.height/2,
             this.width,
             this.height
         );
         ctx.fill();
+        ctx.restore()
     }
 }
 
