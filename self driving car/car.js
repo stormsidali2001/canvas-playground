@@ -66,9 +66,15 @@ class Vector{
         return this;
        
     }
-    subtract(vector){
-        this.x -= vector.x;
-        this.y -= vector.y;
+    subtract(object){
+        if(typeof object === 'number'){
+            this.x -= object;
+            this.y -= object;
+        }
+        else{
+            this.x -= object.x;
+            this.y -= object.y;
+        }
         return this;
     }
     multiply(object){
@@ -112,10 +118,7 @@ class Car{
         this.maxSpeed = new Vector(3,3);
     }
     update(){
-        if(this.controller.left){
-           this.v.x -= this.a.x;
-           this.angle += this.omega;
-           /*
+         /*
                 THE UNIT CERCLE is rotated 90 degrees from the x-axis
                 0
                 |
@@ -124,26 +127,31 @@ class Car{
                 |
                 pi
            */
-          
-        }
-        if(this.controller.right){
-            this.v.x += this.a.x;
-            this.angle -= this.omega;
-        }
+       
+        const back = this.v.length >0 ?-1:1;
         if(this.controller.forward){
-            this.v.y -= this.a.y;
+            this.v.add(this.a);
         }
         if(this.controller.backward){
-            this.v.y += this.a.y;
+            this.v.subtract(this.a);
         }
-        if(this.v.greaterThan(this.maxSpeed)){
-            this.v = this.maxSpeed.copy();
-        }
+        if(this.controller.left){
+            this.angle += this.omega*back;
+         }
+         if(this.controller.right){
+             this.angle -= this.omega*back;
+         }
+        // if(this.v.greaterThan(this.maxSpeed)){
+        //     this.v = this.maxSpeed.copy();
+        // }
         if(this.v.lowerThan(-this.maxSpeed.multiply(0.5))){
             this.v = -this.maxSpeed.multiply(0.5).copy();
         }
        
         this.v.multiply(1-this.frictionFactor);
+         this.position.x -= Math.sin(this.angle)*this.v.x;
+         this.position.y -= Math.cos(this.angle)*this.v.y;
+        
        
 
     }
@@ -152,6 +160,7 @@ class Car{
         ctx.fillStyle = 'black'
         ctx.save()
         ctx.translate(this.position.x,this.position.y)
+        ctx.rotate(-this.angle);
         ctx.rect(
             - this.width/2,
             -this.height/2,
