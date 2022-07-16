@@ -116,8 +116,11 @@ class Car{
         this.angle = 0;
         this.omega = 0.03;
         this.maxSpeed = new Vector(3,3);
+        this.sensor = new Sensor(this);
+        console.log(this)
     }
-    update(){
+    update(readBorders){
+        this.sensor.update(readBorders)
          /*
                 THE UNIT CERCLE is rotated 90 degrees from the x-axis
                 0
@@ -164,7 +167,8 @@ class Car{
             this.height
         );
         ctx.fill();
-        ctx.restore()
+        ctx.restore();
+        this.sensor.draw(ctx);
     }
 }
 
