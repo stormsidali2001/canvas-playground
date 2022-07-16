@@ -141,14 +141,10 @@ class Car{
          if(this.controller.right){
              this.angle -= this.omega*back;
          }
-        // if(this.v.greaterThan(this.maxSpeed)){
-        //     this.v = this.maxSpeed.copy();
-        // }
-        if(this.v.lowerThan(-this.maxSpeed.multiply(0.5))){
-            this.v = -this.maxSpeed.multiply(0.5).copy();
-        }
+        
        
-        this.v.multiply(1-this.frictionFactor);
+       
+         this.v.multiply(1-this.frictionFactor);
          this.position.x -= Math.sin(this.angle)*this.v.x;
          this.position.y -= Math.cos(this.angle)*this.v.y;
         
