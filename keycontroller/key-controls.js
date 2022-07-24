@@ -26,4 +26,9 @@ class KeyControls{
         if (this.keys['ArrowDown'] || this.keys['s']) return 1;
         return 0;
     }
+    reset(){
+        for(let key in this.keys){
+            this.keys[key] = false;
+        }
+    }
 }
