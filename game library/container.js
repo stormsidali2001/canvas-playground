@@ -14,3 +14,4 @@ class Container{
         this.children.forEach(c=>c.update && c.update(dt,t));
     }
 }
+export default Container;

@@ -1,3 +1,8 @@
+import CanvasRenderer from './renderer/canvas-rendrer.js';
+import Container from './container.js';
+import Text from './views/Text.js';
+import Sprite from './Sprite.js';
+import Texture from './Texture.js';
 const domContainer = document.getElementById('canvas')
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -14,15 +19,24 @@ const message = new Text('Hello World',{
 });
 message.position.x = w/2;
 message.position.y = h/2;
-let last = 0;
+const texture = new Texture('./assets/spaceship.png');
+const sprite = new Sprite(texture)
+sprite.position.x = w/2;
+sprite.position.y = h/2;
+//
 scene.add(message)
+scene.add(sprite)
+rendrer.render(scene);
+console.log(scene)
+//
+let last = 0;
 function animate(ms){
     const t  = ms;
-    dt = t - last;
+    const dt = t - last;
     last = t;
     scene.update(dt,t);
     rendrer.render(scene);
     
     requestAnimationFrame(animate);
 }
-animate();
+// animate();

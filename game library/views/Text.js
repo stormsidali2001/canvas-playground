@@ -10,3 +10,5 @@ class Text{
         this.position.x += 1;
     }
 }
+
+export default Text;

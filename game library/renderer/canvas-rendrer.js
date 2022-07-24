@@ -22,14 +22,21 @@ class CanvasRenderer{
                 if(child.position){
                      this.ctx.translate(Math.round(child.position.x),Math.round(child.position.y));
                 }
+                console.log(child.texture)
                 if(child.text){
                     const {font,fill,align} = child.style;
-
+                 
                     if(font)  this.ctx.font = font;
                     if(fill)  this.ctx.fillStyle = fill;
                     if(align) this.ctx.textAlign = align;
                     this.ctx.fillText(child.text,0,0);
                 }
+                else if(child.texture){
+                  
+                    const {texture} = child;
+                    this.ctx.drawImage(texture.img,0,0);
+                }
+                
                 //if it's a container go through  it's children recursively
                 if(child.children){
                     renderRec(child)
@@ -42,3 +49,4 @@ class CanvasRenderer{
         
     }
 }
+export default CanvasRenderer;
