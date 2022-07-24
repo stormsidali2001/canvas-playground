@@ -11,7 +11,10 @@ class Container{
         return child;
     }
     update(dt,t){
-        this.children.forEach(c=>c.update && c.update(dt,t));
+        this.children.filter(c=>{
+            c.update && c.update(dt,t)
+            return !c.dead;
+        });
     }
 }
 export default Container;

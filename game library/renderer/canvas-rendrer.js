@@ -33,8 +33,13 @@ class CanvasRenderer{
                 }
                 else if(child.texture){
                   
-                    const {texture} = child;
-                    this.ctx.drawImage(texture.img,0,0);
+                    const {texture,position:{x,y}} = child;
+                    console.log("texture",texture.img)
+                    this.ctx.fillStyle = 'white'
+                    texture.img.onload = ()=>{
+
+                        this.ctx.drawImage(texture.img,x,y,40,40);
+                    }
                 }
                 
                 //if it's a container go through  it's children recursively
