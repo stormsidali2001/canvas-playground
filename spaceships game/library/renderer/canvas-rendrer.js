@@ -12,17 +12,18 @@ class CanvasRenderer{
        
     }
     render(container){
+         if(this.clear) this.ctx.clearRect(0,0,this.width,this.height);
         const renderRec= (container)=>{
-            if(this.clear) this.ctx.clearRect(0,0,this.width,this.height);
+            
             container.children.forEach(child => {
+                
                 if(!child.visible) return;
-
                 this.ctx.save();
                 //drawing the leaf nodes
                 if(child.position){
-                     this.ctx.translate(Math.round(child.position.x),Math.round(child.position.y));
+                      this.ctx.translate(Math.round(child.position.x),Math.round(child.position.y));
                 }
-                console.log(child.texture)
+          
                 if(child.text){
                     const {font,fill,align} = child.style;
                  
@@ -31,15 +32,16 @@ class CanvasRenderer{
                     if(align) this.ctx.textAlign = align;
                     this.ctx.fillText(child.text,0,0);
                 }
-                else if(child.texture){
+               if(child.texture){
                   
-                    const {texture,position:{x,y}} = child;
-                    console.log("texture",texture.img)
-                    this.ctx.fillStyle = 'white'
-                    texture.img.onload = ()=>{
-
-                        this.ctx.drawImage(texture.img,x,y,40,40);
-                    }
+                   const {texture,position:{x,y}} = child;
+                   
+                   this.ctx.fillStyle = 'white'
+                  
+                 
+                    this.ctx.drawImage(texture.img,0,0,40,40);
+                    // this.ctx.fillStyle = 'white'
+                    // this.ctx.fillRect(0,0,40,40);
                 }
                 
                 //if it's a container go through  it's children recursively
@@ -51,6 +53,7 @@ class CanvasRenderer{
         }
 
         renderRec(container)
+       
         
     }
 }

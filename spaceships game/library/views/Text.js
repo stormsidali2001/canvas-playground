@@ -7,9 +7,7 @@ class Text{
         this.dead = false;
     }
 
-    update(dt,t){
-        this.position.x += 1;
-    }
+   
 }
 
 export default Text;
